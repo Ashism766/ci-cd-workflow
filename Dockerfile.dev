@@ -10,7 +10,7 @@ WORKDIR '/app'
 COPY --chown=node:node ./package.json ./
 
 # Install dependencies
-RUN npm i
+RUN npm i --unsafe-perm
 
 # Copy the rest of the application files
 COPY --chown=node:node ./ ./
