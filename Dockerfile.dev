@@ -1,0 +1,19 @@
+FROM node:16-alpine
+
+# Change user to "node"
+USER node
+
+# Set the working directory
+WORKDIR '/app'
+
+# Copy the package.json first to leverage Docker's layer caching
+COPY --chown=node:node ./package.json ./
+
+# Install dependencies
+RUN npm i
+
+# Copy the rest of the application files
+COPY --chown=node:node ./ ./
+
+# Set the default command to run the application
+CMD ["npm", "run", "start"]
