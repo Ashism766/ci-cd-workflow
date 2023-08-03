@@ -17,3 +17,6 @@ COPY --chown=node:node ./ ./
 
 # Set the default command to run the application
 CMD ["npm", "run", "start"]
+
+# Change the permissions of the node_modules directory
+RUN chown -R node:node node_modules
