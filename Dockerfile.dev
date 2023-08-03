@@ -1,22 +1,21 @@
 FROM node:16-alpine
 
-# Change user to "node"
-USER node
-
 # Set the working directory
 WORKDIR '/app'
+
+# Change user to "node"
+USER node
 
 # Copy the package.json first to leverage Docker's layer caching
 COPY --chown=node:node ./package.json ./
 
-# Install dependencies
+# Install dependencies with elevated permissions
+USER root
 RUN npm i --unsafe-perm
+USER node
 
 # Copy the rest of the application files
 COPY --chown=node:node ./ ./
 
 # Set the default command to run the application
 CMD ["npm", "run", "start"]
-
-# Change the permissions of the node_modules directory
-RUN chown -R node:node node_modules
